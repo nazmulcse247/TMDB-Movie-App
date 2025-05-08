@@ -22,14 +22,42 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("keystore/debug-key.jks")
+            storePassword = "password"
+            keyAlias = "key0"
+            keyPassword = "password"
+        }
+    }
+
     buildTypes {
-        release {
-            isMinifyEnabled = false
+        debug {
+            signingConfig = signingConfigs.getByName("debug")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
+
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            signingConfig = signingConfigs.getByName("release")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            )
+        }
+
+        create("qa") {
+            initWith(getByName("release"))
+            matchingFallbacks.add("release")
+        }
+    }
+
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -64,7 +92,7 @@ dependencies {
 
     // Additional libraries
     implementation(libs.androidx.core.splashscreen)
-    implementation(libs.androidx.multidex)
+    //implementation(libs.androidx.multidex)
     implementation(libs.material)
 
     // Networking
@@ -72,6 +100,7 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.logging.interceptor)
     implementation(libs.gson)
+    implementation(libs.retrofit.rxjava3.adapter)
 
     // Image Loading
     implementation(libs.landscapist.coil)
@@ -83,7 +112,7 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     ksp(libs.hilt.compiler)
 
-    // Logger
+    // Timber
     implementation(libs.timber)
 
     // Room database
@@ -97,5 +126,8 @@ dependencies {
 
     //Paging
     implementation(libs.androidx.paging)
+
+    //Logger
+    implementation(libs.loggerr)
 
 }
