@@ -1,4 +1,6 @@
 package com.iamnazmul.tmdbmovie
+import com.iamnazmul.tmdbmovie.di.qualifier.AppBaseUrl
+import com.iamnazmul.tmdbmovie.di.qualifier.AppImageBaseUrl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
