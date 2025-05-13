@@ -30,6 +30,12 @@ room = "2.7.1"
 coroutinesVersion = "1.10.1"
 navigationVersion = "2.8.9"
 loggerVersition = "2.2.0"
+viewStateLayoutVersion = "1.1.1"
+sdpVersion = "1.1.0"
+lottieAnimation = "6.1.0"
+lifecycleVersion = "2.9.0"
+fragmentVersion = "1.8.6"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -72,6 +78,18 @@ room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 kotlin-coroutines = {group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutinesVersion"}
 loggerr = { module = "com.orhanobut:logger", version.ref = "loggerVersition" }
 retrofit-rxjava3-adapter = {group = "com.squareup.retrofit2", name = "adapter-rxjava3", version.ref = "retrofit"}
+view-state-layout = {group = "com.github.kamrul3288", name = "viewstatelayout", version.ref = "viewStateLayoutVersion"}
+sdp = {group = "com.intuit.sdp", name = "sdp-android", version.ref = "sdpVersion"}
+ssp = {group = "com.intuit.ssp", name = "ssp-android", version.ref = "sdpVersion"}
+lottie-animation = {group = "com.airbnb.android", name = "lottie", version.ref = "lottieAnimation"}
+androidx-viewmodel-ktx = {group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleVersion"}
+androidx-fragment-ktx = {group = "androidx.fragment",name = "fragment-ktx", version.ref = "fragmentVersion"}
+
+[bundles]
+android-responsive-size-dependencies = [
+    "sdp",
+    "ssp"
+]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

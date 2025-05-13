@@ -1,7 +1,6 @@
 package com.iamnazmul.tmdbmovie.di.module
 import com.iamnazmul.tmdbmovie.common.constant.AppConstant
 import com.iamnazmul.tmdbmovie.common.sharedpreference.SharedPrefHelper
-import com.iamnazmul.tmdbmovie.common.sharedpreference.SpKey
 import com.iamnazmul.tmdbmovie.di.aurefresh.AuthenticationRefreshToken
 import dagger.Module
 import dagger.Provides

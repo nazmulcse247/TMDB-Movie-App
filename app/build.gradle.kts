@@ -131,4 +131,18 @@ dependencies {
     //Logger
     implementation(libs.loggerr)
 
+    //View State
+    implementation(libs.view.state.layout)
+
+    //Scalable size uni
+    implementation(libs.bundles.android.responsive.size.dependencies)
+
+    //Lottie animation
+    implementation(libs.lottie.animation)
+
+    //ViewModels
+    implementation(libs.androidx.viewmodel.ktx)
+    implementation(libs.androidx.fragment.ktx)
+
+
 }
