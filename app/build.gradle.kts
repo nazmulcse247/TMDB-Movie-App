@@ -144,5 +144,9 @@ dependencies {
     implementation(libs.androidx.viewmodel.ktx)
     implementation(libs.androidx.fragment.ktx)
 
+    //Navigation fragment
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
+
 
 }

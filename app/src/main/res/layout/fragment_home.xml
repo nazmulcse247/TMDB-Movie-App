@@ -7,6 +7,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.home.HomeFragment">
 
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <com.iamnazmul.tmdbmovie.common.utils.CustomViewPagerScroll
+            android:id="@+id/viewpagerPopularMovies"
+            android:layout_width="match_parent"
+            android:clickable="true"
+            android:touchscreenBlocksFocus="true"
+            android:layout_height="match_parent"
+            android:visibility="visible" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <include
         android:id="@+id/toolbarInc"
         layout="@layout/common_toolbar"

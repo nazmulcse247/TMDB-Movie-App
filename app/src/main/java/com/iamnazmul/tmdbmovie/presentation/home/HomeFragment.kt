@@ -1,5 +1,8 @@
 package com.iamnazmul.tmdbmovie.presentation.home
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowInsets
+import android.view.WindowInsetsController
 import androidx.fragment.app.viewModels
 import com.iamnazmul.tmdbmovie.common.utils.ErrorUiHandler
 import com.iamnazmul.tmdbmovie.core.common.base.BaseFragment

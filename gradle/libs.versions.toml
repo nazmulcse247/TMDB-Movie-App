@@ -28,7 +28,7 @@ compose-bom = "2025.04.01"
 compose = "1.8.0"
 room = "2.7.1"
 coroutinesVersion = "1.10.1"
-navigationVersion = "2.8.9"
+navigationVersion = "2.9.0"
 loggerVersition = "2.2.0"
 viewStateLayoutVersion = "1.1.1"
 sdpVersion = "1.1.0"
@@ -84,6 +84,8 @@ ssp = {group = "com.intuit.ssp", name = "ssp-android", version.ref = "sdpVersion
 lottie-animation = {group = "com.airbnb.android", name = "lottie", version.ref = "lottieAnimation"}
 androidx-viewmodel-ktx = {group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleVersion"}
 androidx-fragment-ktx = {group = "androidx.fragment",name = "fragment-ktx", version.ref = "fragmentVersion"}
+navigation-fragment = {group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationVersion"}
+navigation-ui = {group = "androidx.navigation", name = "navigation-ui-ktx" ,version.ref = "navigationVersion"}
 
 [bundles]
 android-responsive-size-dependencies = [
