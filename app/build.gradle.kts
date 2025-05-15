@@ -148,5 +148,11 @@ dependencies {
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
 
+    //Glide
+    implementation(libs.glide)
+
+    //Swipe Refresh
+    implementation(libs.androidx.swipe.refresh)
+
 
 }

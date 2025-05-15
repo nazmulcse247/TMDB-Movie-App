@@ -9,5 +9,6 @@ data class PopularMovieApiEntity(
     val posterPath: String,
     val video: Boolean,
     val voteAverage: Double,
-    val voteCount: Int
+    val voteCount: Int,
+    var isBookmarked: Boolean = false,
 )

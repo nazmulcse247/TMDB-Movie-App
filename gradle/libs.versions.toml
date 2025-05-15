@@ -35,6 +35,8 @@ sdpVersion = "1.1.0"
 lottieAnimation = "6.1.0"
 lifecycleVersion = "2.9.0"
 fragmentVersion = "1.8.6"
+glideVersition = "4.16.0"
+swipeLayoutVersion = "1.1.0"
 
 
 [libraries]
@@ -86,6 +88,8 @@ androidx-viewmodel-ktx = {group = "androidx.lifecycle", name = "lifecycle-viewmo
 androidx-fragment-ktx = {group = "androidx.fragment",name = "fragment-ktx", version.ref = "fragmentVersion"}
 navigation-fragment = {group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationVersion"}
 navigation-ui = {group = "androidx.navigation", name = "navigation-ui-ktx" ,version.ref = "navigationVersion"}
+glide = {group = "com.github.bumptech.glide", name = "glide" ,version.ref = "glideVersition"}
+androidx-swipe-refresh = {group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swipeLayoutVersion"}
 
 [bundles]
 android-responsive-size-dependencies = [

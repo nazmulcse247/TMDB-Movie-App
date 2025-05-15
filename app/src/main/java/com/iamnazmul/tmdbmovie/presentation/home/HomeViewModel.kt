@@ -41,7 +41,7 @@ class HomeViewModel @Inject constructor(
 sealed interface UiState {
     data class Loading(val isLoading: Boolean) : UiState
     data class ApiError(val message: String) : UiState
-    data class ApiSuccess(val menu: List<PopularMovieApiEntity>) : UiState
+    data class ApiSuccess(val popularMovie: List<PopularMovieApiEntity>) : UiState
 }
 
 sealed interface UiAction {

@@ -19,4 +19,20 @@ object AppConstant {
         const val SHARED_PREF_NAME = "mova_shared_pref"
         const val DARK_MODE = "darkMode"
     }
+
+    fun getPosterPath(posterPath: String?): String {
+        return BASE_URL_IMAGE + posterPath
+    }
+
+    fun getBackDropPath(backDropPath: String?): String {
+        return BASE_URL_IMAGE + backDropPath
+    }
+
+    fun getYouTubePath(youTubePath: String?): String {
+        return BASE_URL_IMAGE_YOUTUBE + youTubePath + SIZE_IMG_YOUTUBE
+    }
+
+    fun getFlagPath(iso6391: String): String {
+        return "https://www.unknown.nu/flags/images/$iso6391-100"
+    }
 }
