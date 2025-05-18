@@ -31,9 +31,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
-        //hideNavigation()
-
         setupBottomNavigationView()
 
 
@@ -83,16 +80,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                     binding.bottomNavigation.showWithAnimation(binding.fragmentContainerView)
                 }
             }
-        }
-    }
-
-
-    private fun hideNavigation() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            val decorView = window.decorView
-            decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
-                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
         }
     }
 }

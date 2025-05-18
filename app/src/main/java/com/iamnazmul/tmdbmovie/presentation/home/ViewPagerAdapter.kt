@@ -4,13 +4,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.viewpager.widget.PagerAdapter
+import com.iamnazmul.tmdbmovie.common.extfun.clickWithDebounce
 import com.iamnazmul.tmdbmovie.common.extfun.loadImage
 import com.iamnazmul.tmdbmovie.databinding.ItemViewPagerBinding
 import com.iamnazmul.tmdbmovie.model.entity.PopularMovieApiEntity
 import com.muratozturk.mova.common.enums.ImageTypeEnum
 
 class ViewPagerAdapter(
-    private val itemList: ArrayList<PopularMovieApiEntity>
+    private val itemList: ArrayList<PopularMovieApiEntity>,
+    private val onClickAddList : (PopularMovieApiEntity) -> Unit,
+    private val playOnClick : (PopularMovieApiEntity) -> Unit
 ) : PagerAdapter() {
 
     override fun instantiateItem(parent: ViewGroup, position: Int): Any {
@@ -25,12 +28,13 @@ class ViewPagerAdapter(
                 titleTv.text = originalTitle
                 addListBtn.isChecked = isBookmarked
 
-                /*addListBtn.setOnClickListener {
-                    onClickAddList?.invoke(
-                        id, isBookmarked,
-                        Bookmark(id, title, "", posterPath ?: "", voteAverage, MediaTypeEnum.MOVIE)
-                    )
-                }*/
+                addListBtn.clickWithDebounce {
+                    onClickAddList.invoke(itemList[position])
+                }
+
+                playBtn.clickWithDebounce {
+                    playOnClick.invoke(itemList[position])
+                }
             }
         }
 

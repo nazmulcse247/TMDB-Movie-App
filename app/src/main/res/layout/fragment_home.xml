@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:text="1/20"
+            tools:text="1/20"
             android:textSize="16sp"
             android:layout_gravity="bottom|center_horizontal"
             android:layout_marginBottom="16dp"

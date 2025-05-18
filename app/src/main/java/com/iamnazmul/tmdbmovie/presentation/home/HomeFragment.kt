@@ -1,4 +1,5 @@
 package com.iamnazmul.tmdbmovie.presentation.home
+
 import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.viewpager.widget.ViewPager
@@ -33,40 +34,59 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>() {
                 }
 
                 is UiState.ApiSuccess -> {
-                    val pagerAdapter =
-                        ViewPagerAdapter(
-                            state.popularMovie as ArrayList<PopularMovieApiEntity>
-                        )
-                    binding.viewpagerPopularMovies.apply {
-                        setScrollDurationFactor(4)
-                        setPageTransformer(
-                            true,
-                            parallaxPageTransformer(
-                                R.id.movieActions
-                            )
-                        )
-                        adapter = pagerAdapter
-                    }
-
-                    pageSwitcher(state.popularMovie)
-
-                    val totalPages = pagerAdapter.count
-                    binding.pageCounterText.text = "1/$totalPages"
-
-                    binding.viewpagerPopularMovies.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-                        override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
-
-                        override fun onPageSelected(position: Int) {
-                            binding.pageCounterText.text = "${position + 1}/$totalPages"
-                        }
-
-                        override fun onPageScrollStateChanged(state: Int) {}
-                    })
+                    displaySlider(state.popularMovie)
                 }
 
                 is UiState.Loading -> errorHandler.showProgressBar(state.isLoading)
             }
         }
+    }
+
+    private fun displaySlider(popularMovieList: List<PopularMovieApiEntity>) {
+        val pagerAdapter =
+            ViewPagerAdapter(
+                popularMovieList as ArrayList<PopularMovieApiEntity>,
+                onClickAddList = {
+
+                },
+                playOnClick = {
+
+                }
+            )
+        binding.viewpagerPopularMovies.apply {
+            setScrollDurationFactor(4)
+            setPageTransformer(true, parallaxPageTransformer(R.id.movieActions))
+            adapter = pagerAdapter
+        }
+
+        pageSwitcher(popularMovieList)
+
+
+        binding.pageCounterText.text = getString(
+            R.string.format_slider_number,
+            "${binding.viewpagerPopularMovies.currentItem + 1}",
+            "${pagerAdapter.count}"
+        )
+
+        binding.viewpagerPopularMovies.addOnPageChangeListener(object :
+            ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+            }
+
+            override fun onPageSelected(position: Int) {
+                binding.pageCounterText.text = getString(
+                    R.string.format_slider_number,
+                    "${position + 1}",
+                    "${pagerAdapter.count}"
+                )
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {}
+        })
     }
 
     private fun pageSwitcher(list: MutableList<PopularMovieApiEntity>) {
