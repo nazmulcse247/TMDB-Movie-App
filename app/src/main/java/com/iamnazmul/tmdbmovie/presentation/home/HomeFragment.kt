@@ -1,14 +1,20 @@
 package com.iamnazmul.tmdbmovie.presentation.home
 
 import android.os.Bundle
+import androidx.compose.runtime.saveable.autoSaver
 import androidx.fragment.app.viewModels
 import androidx.viewpager.widget.ViewPager
 import com.iamnazmul.tmdbmovie.R
+import com.iamnazmul.tmdbmovie.common.extfun.autoCleared
+import com.iamnazmul.tmdbmovie.common.extfun.setUpGridRecyclerView
+import com.iamnazmul.tmdbmovie.common.extfun.setUpHorizontalRecyclerView
 import com.iamnazmul.tmdbmovie.common.utils.ErrorUiHandler
 import com.iamnazmul.tmdbmovie.common.utils.MyCountDownTimer
 import com.iamnazmul.tmdbmovie.common.utils.parallaxPageTransformer
 import com.iamnazmul.tmdbmovie.core.common.base.BaseFragment
 import com.iamnazmul.tmdbmovie.databinding.FragmentHomeBinding
+import com.iamnazmul.tmdbmovie.domain.apiusecase.FetchNowPlayingMovieApiUseCase
+import com.iamnazmul.tmdbmovie.model.entity.NowPlayingMovie
 import com.iamnazmul.tmdbmovie.model.entity.PopularMovieApiEntity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,11 +25,15 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>() {
 
     private val viewModel by viewModels<HomeViewModel>()
 
+    private var nowPlayingMovieAdapter by autoCleared<NowPlayingMovieAdapter>()
+
     override fun viewBindingLayout() = FragmentHomeBinding.inflate(layoutInflater)
 
     override fun initializeView(savedInstanceState: Bundle?) {
         errorHandler = ErrorUiHandler(binding.errorUi, binding.featureUi)
         popularMovieStateObserver()
+
+        viewModel.action(UiAction.FetchNowPlayingMovie(1))
     }
 
     private fun popularMovieStateObserver() {
@@ -33,11 +43,12 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>() {
                     viewModel.action(UiAction.FetchPopularMovie)
                 }
 
-                is UiState.ApiSuccess -> {
+                is UiState.PopularMovieList -> {
                     displaySlider(state.popularMovie)
                 }
 
                 is UiState.Loading -> errorHandler.showProgressBar(state.isLoading)
+                is UiState.NowPlayingMovieList -> displayNowPlayingMovie(state.nowPlayingMovie)
             }
         }
     }
@@ -87,6 +98,14 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>() {
 
             override fun onPageScrollStateChanged(state: Int) {}
         })
+    }
+
+    private fun displayNowPlayingMovie(nowPlayingList : List<NowPlayingMovie>) {
+        nowPlayingMovieAdapter = NowPlayingMovieAdapter()
+        requireContext().setUpHorizontalRecyclerView(binding.nowPlayingMovieRv, nowPlayingMovieAdapter)
+
+        nowPlayingMovieAdapter.submitList(nowPlayingList)
+        nowPlayingMovieAdapter.notifyItemChanged(0, nowPlayingList.size)
     }
 
     private fun pageSwitcher(list: MutableList<PopularMovieApiEntity>) {

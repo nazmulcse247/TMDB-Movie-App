@@ -10,6 +10,9 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import android.widget.TextView
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.Locale
 
 fun EditText.getTextFromEt():String = this.text.toString().trim()
 fun AutoCompleteTextView.getTextFromAt():String = this.text.toString().trim()
@@ -72,4 +75,25 @@ infix fun Context.setClipboard(text: String) {
     val clipboard = this.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     val clip = ClipData.newPlainText("Copied Text", text)
     clipboard.setPrimaryClip(clip)
+}
+
+fun Double.convertMBtoGB(addText: Boolean): String {
+    if (this >= 1024.0) {
+        return "${(this / 1024.0).format(1)} ${if (addText) " GB" else ""}"
+    }
+
+    return "${this.format(1)} ${if (addText) " MB" else ""}"
+}
+
+fun Int.formatTime(): String {
+    val hours = this / 60
+    val remainingMinutes = this % 60
+    return String.format("%01dh %02dm", hours, remainingMinutes)
+}
+
+fun Double.format(digits: Int): String {
+    val df = DecimalFormat()
+    df.decimalFormatSymbols = DecimalFormatSymbols(Locale.US)
+    df.maximumFractionDigits = digits
+    return df.format(this)
 }

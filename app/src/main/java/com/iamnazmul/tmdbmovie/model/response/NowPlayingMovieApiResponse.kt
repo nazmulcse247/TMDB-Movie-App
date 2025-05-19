@@ -1,13 +1,19 @@
 package com.iamnazmul.tmdbmovie.model.response
 
-data class PopularMovieApiResponse(
+data class NowPlayingMovieApiResponse(
+    val dates: Dates?,
     val page: Int?,
-    val results: List<PopularMovie?>?,
+    val results: List<NowPlayingMovie?>?,
     val total_pages: Int?,
     val total_results: Int?
 )
 
-data class PopularMovie(
+data class Dates(
+    val maximum: String?,
+    val minimum: String?
+)
+
+data class NowPlayingMovie(
     val adult: Boolean?,
     val backdrop_path: String?,
     val genre_ids: List<Int?>?,
