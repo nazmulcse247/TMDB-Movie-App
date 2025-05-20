@@ -19,6 +19,9 @@ class HomeViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<UiState>(UiState.Loading(false))
     val uiState get() = _uiState
 
+    private val _nowPlayingMovieUiState = MutableStateFlow<NowPlayingMovieUiState>(NowPlayingMovieUiState.Loading(false))
+    val nowPlayingMovieUiState get() = _nowPlayingMovieUiState
+
     val action: (UiAction) -> Unit = {
         when (it) {
             UiAction.FetchPopularMovie -> fetchPopularMovie()
@@ -26,9 +29,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    init {
+    /*init {
         fetchPopularMovie()
-    }
+    }*/
 
     private fun fetchPopularMovie() {
         execute {
@@ -46,9 +49,9 @@ class HomeViewModel @Inject constructor(
         execute {
             fetchNowPlayingMovieApiUseCase.execute(FetchNowPlayingMovieApiUseCase.Params(page)).collect { result ->
                 when(result) {
-                    is ApiResult.Error -> _uiState.value = UiState.ApiError(result.message)
-                    is ApiResult.Loading -> _uiState.value = UiState.Loading(result.loading)
-                    is ApiResult.Success -> _uiState.value = UiState.NowPlayingMovieList(result.data.nowPlayingMovie)
+                    is ApiResult.Error -> _nowPlayingMovieUiState.value = NowPlayingMovieUiState.ApiError(result.message)
+                    is ApiResult.Loading -> _nowPlayingMovieUiState.value = NowPlayingMovieUiState.Loading(result.loading)
+                    is ApiResult.Success -> _nowPlayingMovieUiState.value = NowPlayingMovieUiState.NowPlayingMovieList(result.data.nowPlayingMovie)
                 }
             }
         }
@@ -59,7 +62,12 @@ sealed interface UiState {
     data class Loading(val isLoading: Boolean) : UiState
     data class ApiError(val message: String) : UiState
     data class PopularMovieList(val popularMovie: List<PopularMovieApiEntity>) : UiState
-    data class NowPlayingMovieList(val nowPlayingMovie: List<NowPlayingMovie>) : UiState
+}
+
+sealed interface NowPlayingMovieUiState {
+    data class Loading(val isLoading: Boolean) : NowPlayingMovieUiState
+    data class ApiError(val message: String) : NowPlayingMovieUiState
+    data class NowPlayingMovieList(val nowPlayingMovie: List<NowPlayingMovie>) : NowPlayingMovieUiState
 }
 
 sealed interface UiAction {

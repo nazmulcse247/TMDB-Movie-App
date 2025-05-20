@@ -1,19 +1,16 @@
 package com.iamnazmul.tmdbmovie.presentation.home
 
 import android.os.Bundle
-import androidx.compose.runtime.saveable.autoSaver
 import androidx.fragment.app.viewModels
 import androidx.viewpager.widget.ViewPager
 import com.iamnazmul.tmdbmovie.R
 import com.iamnazmul.tmdbmovie.common.extfun.autoCleared
-import com.iamnazmul.tmdbmovie.common.extfun.setUpGridRecyclerView
 import com.iamnazmul.tmdbmovie.common.extfun.setUpHorizontalRecyclerView
 import com.iamnazmul.tmdbmovie.common.utils.ErrorUiHandler
 import com.iamnazmul.tmdbmovie.common.utils.MyCountDownTimer
 import com.iamnazmul.tmdbmovie.common.utils.parallaxPageTransformer
 import com.iamnazmul.tmdbmovie.core.common.base.BaseFragment
 import com.iamnazmul.tmdbmovie.databinding.FragmentHomeBinding
-import com.iamnazmul.tmdbmovie.domain.apiusecase.FetchNowPlayingMovieApiUseCase
 import com.iamnazmul.tmdbmovie.model.entity.NowPlayingMovie
 import com.iamnazmul.tmdbmovie.model.entity.PopularMovieApiEntity
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,8 +28,11 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>() {
 
     override fun initializeView(savedInstanceState: Bundle?) {
         errorHandler = ErrorUiHandler(binding.errorUi, binding.featureUi)
-        popularMovieStateObserver()
 
+        popularMovieStateObserver()
+        nowPlayingMovieStateObserver()
+
+        viewModel.action(UiAction.FetchPopularMovie)
         viewModel.action(UiAction.FetchNowPlayingMovie(1))
     }
 
@@ -41,6 +41,7 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>() {
             when (state) {
                 is UiState.ApiError -> errorHandler.dataError(state.message) {
                     viewModel.action(UiAction.FetchPopularMovie)
+                    viewModel.action(UiAction.FetchNowPlayingMovie(1))
                 }
 
                 is UiState.PopularMovieList -> {
@@ -48,7 +49,21 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>() {
                 }
 
                 is UiState.Loading -> errorHandler.showProgressBar(state.isLoading)
-                is UiState.NowPlayingMovieList -> displayNowPlayingMovie(state.nowPlayingMovie)
+            }
+        }
+    }
+
+    private fun nowPlayingMovieStateObserver() {
+        viewModel.nowPlayingMovieUiState.execute { nowPlayingMovieUiState ->
+            when (nowPlayingMovieUiState) {
+                is NowPlayingMovieUiState.ApiError -> {
+                    errorHandler.dataError(nowPlayingMovieUiState.message) {
+                        viewModel.action(UiAction.FetchPopularMovie)
+                        viewModel.action(UiAction.FetchNowPlayingMovie(1))
+                    }
+                }
+                is NowPlayingMovieUiState.Loading -> errorHandler.showProgressBar(nowPlayingMovieUiState.isLoading)
+                is NowPlayingMovieUiState.NowPlayingMovieList -> displayNowPlayingMovie(nowPlayingMovieUiState.nowPlayingMovie)
             }
         }
     }
