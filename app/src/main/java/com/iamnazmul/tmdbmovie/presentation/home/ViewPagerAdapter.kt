@@ -7,13 +7,13 @@ import androidx.viewpager.widget.PagerAdapter
 import com.iamnazmul.tmdbmovie.common.extfun.clickWithDebounce
 import com.iamnazmul.tmdbmovie.common.extfun.loadImage
 import com.iamnazmul.tmdbmovie.databinding.ItemViewPagerBinding
-import com.iamnazmul.tmdbmovie.model.entity.PopularMovieApiEntity
+import com.iamnazmul.tmdbmovie.model.entity.MovieApiEntity
 import com.muratozturk.mova.common.enums.ImageTypeEnum
 
 class ViewPagerAdapter(
-    private val itemList: ArrayList<PopularMovieApiEntity>,
-    private val onClickAddList : (PopularMovieApiEntity) -> Unit,
-    private val playOnClick : (PopularMovieApiEntity) -> Unit
+    private val itemList: ArrayList<MovieApiEntity>,
+    private val onClickAddList : (MovieApiEntity) -> Unit,
+    private val playOnClick : (MovieApiEntity) -> Unit
 ) : PagerAdapter() {
 
     override fun instantiateItem(parent: ViewGroup, position: Int): Any {

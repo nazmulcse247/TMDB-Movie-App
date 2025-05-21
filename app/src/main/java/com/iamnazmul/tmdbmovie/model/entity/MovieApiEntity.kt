@@ -1,16 +1,6 @@
 package com.iamnazmul.tmdbmovie.model.entity
 
-class NowPlayingMovieApiEntity(
-    val dates: Dates,
-    val nowPlayingMovie: List<NowPlayingMovie>,
-)
-
-data class Dates(
-    val maximum: String?,
-    val minimum: String?
-)
-
-data class NowPlayingMovie(
+data class MovieApiEntity(
     val adult: Boolean,
     val backdropPath: String,
     val id: Int,

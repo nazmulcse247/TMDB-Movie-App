@@ -4,8 +4,8 @@ import com.iamnazmul.tmdbmovie.domain.usecase.ApiUseCaseNonParams
 import com.iamnazmul.tmdbmovie.model.entity.MovieApiEntity
 import javax.inject.Inject
 
-class FetchPopularMovieApiUseCase @Inject constructor(
+class FetchNowPlayingSeriesApiUseCase @Inject constructor(
     private val repository: MovieRepository
 ) : ApiUseCaseNonParams<List<MovieApiEntity>>{
-    override suspend fun execute() = repository.fetchPopularMovie()
+    override suspend fun execute() = repository.fetchNowPlayingSeries()
 }

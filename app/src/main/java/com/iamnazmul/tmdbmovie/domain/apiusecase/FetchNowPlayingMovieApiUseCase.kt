@@ -1,16 +1,13 @@
 package com.iamnazmul.tmdbmovie.domain.apiusecase
 
-import com.iamnazmul.tmdbmovie.domain.base.ApiResult
 import com.iamnazmul.tmdbmovie.domain.repository.MovieRepository
-import com.iamnazmul.tmdbmovie.domain.usecase.ApiUseCaseNonParams
 import com.iamnazmul.tmdbmovie.domain.usecase.ApiUseCaseParams
-import com.iamnazmul.tmdbmovie.model.entity.NowPlayingMovieApiEntity
-import kotlinx.coroutines.flow.Flow
+import com.iamnazmul.tmdbmovie.model.entity.MovieApiEntity
 import javax.inject.Inject
 
 class FetchNowPlayingMovieApiUseCase @Inject constructor(
     private val repository: MovieRepository
-) : ApiUseCaseParams<FetchNowPlayingMovieApiUseCase.Params,NowPlayingMovieApiEntity>{
+) : ApiUseCaseParams<FetchNowPlayingMovieApiUseCase.Params, List<MovieApiEntity>>{
     override suspend fun execute(params: Params) = repository.fetchNowPlayingMovie(params.page)
 
     data class Params(

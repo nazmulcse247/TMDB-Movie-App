@@ -2,35 +2,40 @@ package com.iamnazmul.tmdbmovie.data.repoimpl.remote
 
 import com.iamnazmul.tmdbmovie.data.NetworkBoundResource
 import com.iamnazmul.tmdbmovie.data.apiservice.MovieApiService
-import com.iamnazmul.tmdbmovie.data.mapper.NowPlayingMovieApiMapper
-import com.iamnazmul.tmdbmovie.data.mapper.PopularMovieApiMapper
+import com.iamnazmul.tmdbmovie.data.mapper.MovieApiMapper
 import com.iamnazmul.tmdbmovie.data.mapper.mapFromApiResponse
 import com.iamnazmul.tmdbmovie.domain.base.ApiResult
 import com.iamnazmul.tmdbmovie.domain.repository.MovieRepository
-import com.iamnazmul.tmdbmovie.model.entity.NowPlayingMovieApiEntity
-import com.iamnazmul.tmdbmovie.model.entity.PopularMovieApiEntity
+import com.iamnazmul.tmdbmovie.model.entity.MovieApiEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class MovieRepoImpl @Inject constructor(
     private val apiService: MovieApiService,
-    private val popularMovieApiMapper: PopularMovieApiMapper,
-    private val nowPlayingMovieApiMapper: NowPlayingMovieApiMapper,
+    private val movieApiMapper: MovieApiMapper,
     private val networkBoundResources: NetworkBoundResource
 ) : MovieRepository{
-    override suspend fun fetchPopularMovie(): Flow<ApiResult<List<PopularMovieApiEntity>>> {
+    override suspend fun fetchPopularMovie(): Flow<ApiResult<List<MovieApiEntity>>> {
         return mapFromApiResponse(
             result = networkBoundResources.downloadData {
                 apiService.fetchPopularMovie()
-            }, mapper = popularMovieApiMapper
+            }, mapper = movieApiMapper
         )
     }
 
-    override suspend fun fetchNowPlayingMovie(page: Int): Flow<ApiResult<NowPlayingMovieApiEntity>> {
+    override suspend fun fetchNowPlayingMovie(page: Int): Flow<ApiResult<List<MovieApiEntity>>> {
         return mapFromApiResponse(
             result = networkBoundResources.downloadData {
                 apiService.fetchNowPlayingMovie(page)
-            } , mapper = nowPlayingMovieApiMapper
+            } , mapper = movieApiMapper
+        )
+    }
+
+    override suspend fun fetchNowPlayingSeries(): Flow<ApiResult<List<MovieApiEntity>>> {
+        return mapFromApiResponse(
+            result = networkBoundResources.downloadData {
+                apiService.fetchNowPlayingSeries()
+            }, mapper = movieApiMapper
         )
     }
 

@@ -23,6 +23,7 @@
             android:id="@+id/sliderCl"
             android:layout_width="match_parent"
             android:layout_height="300dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -52,59 +53,134 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:fillViewport="true"
             android:layout_marginTop="@dimen/margin_8"
-            app:layout_constraintTop_toBottomOf="@+id/sliderCl">
+            app:layout_constraintTop_toBottomOf="@+id/sliderCl"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-            <LinearLayout
-                android:id="@+id/nowPlayingMovieLn"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:weightSum="1"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteX="5dp">
+                android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_width="0dp"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/nowPlayingMovieCl"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/now_playing_movies"
-                    android:textColor="@color/text_color"
-                    android:textFontWeight="700"
-                    android:textSize="20sp" />
+                    android:visibility="gone"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/seeAllNowPlayingSeries"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_marginHorizontal="10dp"
-                    android:gravity="center"
-                    android:text="@string/see_all"
-                    android:textColor="@color/red"
-                    android:textFontWeight="600"
-                    android:textSize="16sp" />
+                    <LinearLayout
+                        android:id="@+id/nowPlayingMovieLn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal"
+                        android:weightSum="1"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:layout_editor_absoluteX="5dp">
 
-            </LinearLayout>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/now_playing_movies"
+                            android:textColor="@color/text_color"
+                            android:textFontWeight="600"
+                            android:layout_marginStart="@dimen/margin_4"
+                            android:textSize="@dimen/fifteen" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/nowPlayingMovieRv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="10dp"
-                android:visibility="visible"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_now_playing_movie"
-                app:layout_constraintTop_toBottomOf="@+id/nowPlayingMovieLn"/>
+                        <TextView
+                            android:id="@+id/seeAllNowPlayingMovie"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_marginHorizontal="10dp"
+                            android:gravity="center"
+                            android:text="@string/see_all"
+                            android:textColor="@color/red"
+                            android:textFontWeight="600"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/nowPlayingMovieRv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="10dp"
+                        android:visibility="visible"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_now_playing_movie"
+                        app:layout_constraintTop_toBottomOf="@+id/nowPlayingMovieLn"/>
 
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/nowPlayingSeriesCl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/nowPlayingMovieCl">
+
+                    <LinearLayout
+                        android:id="@+id/nowPlayingSeriesLn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal"
+                        android:weightSum="1"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:layout_editor_absoluteX="5dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/now_playing_series"
+                            android:textColor="@color/text_color"
+                            android:textFontWeight="600"
+                            android:layout_marginStart="@dimen/margin_4"
+                            android:textSize="@dimen/fifteen" />
+
+                        <TextView
+                            android:id="@+id/seeAllNowPlayingSeries"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_marginHorizontal="10dp"
+                            android:gravity="center"
+                            android:text="@string/see_all"
+                            android:textColor="@color/red"
+                            android:textFontWeight="600"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/nowPlayingSeriesRv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="10dp"
+                        android:visibility="visible"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_now_playing_movie"
+                        app:layout_constraintTop_toBottomOf="@+id/nowPlayingSeriesLn"/>
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
 
 

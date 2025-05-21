@@ -10,7 +10,7 @@ import com.iamnazmul.tmdbmovie.databinding.ItemNowPlayingMovieBinding
 import com.iamnazmul.tmdbmovie.model.entity.MovieApiEntity
 import com.muratozturk.mova.common.enums.ImageTypeEnum
 
-class NowPlayingMovieAdapter : DataBoundListAdapter<MovieApiEntity, ItemNowPlayingMovieBinding>(
+class NowPlayingSeriesAdapter : DataBoundListAdapter<MovieApiEntity, ItemNowPlayingMovieBinding>(
     diffCallback = object : DiffUtil.ItemCallback<MovieApiEntity>() {
         override fun areItemsTheSame(
             oldItem: MovieApiEntity,

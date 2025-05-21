@@ -1,15 +1,15 @@
 package com.iamnazmul.tmdbmovie.data.mapper
 
-import com.iamnazmul.tmdbmovie.model.entity.PopularMovieApiEntity
-import com.iamnazmul.tmdbmovie.model.response.PopularMovieApiResponse
+import com.iamnazmul.tmdbmovie.model.entity.MovieApiEntity
+import com.iamnazmul.tmdbmovie.model.response.MovieApiResponse
 import javax.inject.Inject
 
-class PopularMovieApiMapper @Inject constructor(
+class MovieApiMapper @Inject constructor(
 
-): Mapper<PopularMovieApiResponse, List<PopularMovieApiEntity>>{
-    override fun mapFromApiResponse(type: PopularMovieApiResponse): List<PopularMovieApiEntity> {
+): Mapper<MovieApiResponse, List<MovieApiEntity>>{
+    override fun mapFromApiResponse(type: MovieApiResponse): List<MovieApiEntity> {
         return type.results?.map { popularMovie ->
-            PopularMovieApiEntity(
+            MovieApiEntity(
                 adult = popularMovie?.adult == false,
                 backdropPath = popularMovie?.backdrop_path ?: "",
                 id = popularMovie?.id ?: 0,
