@@ -68,7 +68,7 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>() {
                     }
                 }
                 is NowPlayingMovieUiState.Loading -> {
-                    errorHandler.showProgressBar(state.isLoading)
+                    errorHandler.showProgressBarHideFeatureUi(state.isLoading)
                 }
                 is NowPlayingMovieUiState.NowPlayingMovieList -> {
                     binding.nowPlayingMovieCl.isVisible = state.nowPlayingMovie.isNotEmpty()
@@ -86,7 +86,7 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>() {
                         viewModel.action(UiAction.FetchNowPlayingSeries)
                     }
                 }
-                is NowPlayingSeriesUiState.Loading -> errorHandler.showProgressBar(state.isLoading)
+                is NowPlayingSeriesUiState.Loading -> errorHandler.showProgressBarHideFeatureUi(state.isLoading)
 
                 is NowPlayingSeriesUiState.NowPlayingSeriesList -> {
                     binding.nowPlayingSeriesCl.isVisible = state.nowPlayingSeries.isNotEmpty()
