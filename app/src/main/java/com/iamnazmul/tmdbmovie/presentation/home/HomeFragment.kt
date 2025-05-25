@@ -35,25 +35,41 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>() {
         nowPlayingMovieStateObserver()
         nowPlayingSeriesUiStateObserver()
 
-        //viewModel.action(UiAction.FetchPopularMovie)
-        //viewModel.action(UiAction.FetchNowPlayingMovie(1))
-        //viewModel.action(UiAction.FetchNowPlayingSeries)
+        /*viewModel.action(UiAction.FetchNowPlayingMovie(1))
+        viewModel.action(UiAction.FetchNowPlayingSeries)*/
+
+
+        initNowPlayingMovieRecyclerView()
+        initNowPlayingSeriesRecyclerView()
+
+
     }
+
+    private fun initNowPlayingMovieRecyclerView() {
+        nowPlayingMovieAdapter = NowPlayingMovieAdapter()
+        requireContext().setUpHorizontalRecyclerView(binding.nowPlayingMovieRv, nowPlayingMovieAdapter)
+    }
+
+    private fun initNowPlayingSeriesRecyclerView() {
+        nowPlayingSeriesAdapter = NowPlayingSeriesAdapter()
+        requireContext().setUpHorizontalRecyclerView(binding.nowPlayingSeriesRv, nowPlayingSeriesAdapter)
+    }
+
+
 
     private fun popularMovieStateObserver() {
         viewModel.uiState.execute { state ->
             when (state) {
                 is UiState.ApiError -> errorHandler.dataError(state.message) {
-                    viewModel.action(UiAction.FetchPopularMovie)
-                    viewModel.action(UiAction.FetchNowPlayingMovie(1))
+                    retryHomePageData()
                 }
+
+                is UiState.Loading -> errorHandler.showProgressBar(state.isLoading)
 
                 is UiState.PopularMovieList -> {
                     binding.sliderCl.isVisible = state.popularMovie.isNotEmpty()
                     displaySlider(state.popularMovie)
                 }
-
-                is UiState.Loading -> errorHandler.showProgressBarHideFeatureUi(state.isLoading)
             }
         }
     }
@@ -63,16 +79,16 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>() {
             when (state) {
                 is NowPlayingMovieUiState.ApiError -> {
                     errorHandler.dataError(state.message) {
-                        viewModel.action(UiAction.FetchPopularMovie)
-                        viewModel.action(UiAction.FetchNowPlayingMovie(1))
+                        retryHomePageData()
                     }
                 }
                 is NowPlayingMovieUiState.Loading -> {
-                    errorHandler.showProgressBarHideFeatureUi(state.isLoading)
+                    errorHandler.showProgressBar(state.isLoading)
                 }
                 is NowPlayingMovieUiState.NowPlayingMovieList -> {
                     binding.nowPlayingMovieCl.isVisible = state.nowPlayingMovie.isNotEmpty()
-                    displayNowPlayingMovie(state.nowPlayingMovie)
+                    nowPlayingMovieAdapter.submitList(state.nowPlayingMovie.toMutableList())
+                    nowPlayingMovieAdapter.notifyItemRangeChanged(0, nowPlayingMovieAdapter.itemCount)
                 }
             }
         }
@@ -83,14 +99,15 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>() {
             when (state) {
                 is NowPlayingSeriesUiState.ApiError -> {
                     errorHandler.dataError(state.message) {
-                        viewModel.action(UiAction.FetchNowPlayingSeries)
+                        retryHomePageData()
                     }
                 }
-                is NowPlayingSeriesUiState.Loading -> errorHandler.showProgressBarHideFeatureUi(state.isLoading)
+                is NowPlayingSeriesUiState.Loading -> errorHandler.showProgressBar(state.isLoading)
 
                 is NowPlayingSeriesUiState.NowPlayingSeriesList -> {
                     binding.nowPlayingSeriesCl.isVisible = state.nowPlayingSeries.isNotEmpty()
-                    displayNowPlayingSeries(state.nowPlayingSeries)
+                    nowPlayingSeriesAdapter.submitList(state.nowPlayingSeries.toMutableList())
+                    nowPlayingSeriesAdapter.notifyItemRangeChanged(0, nowPlayingSeriesAdapter.itemCount)
                 }
             }
         }
@@ -143,20 +160,10 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>() {
         })
     }
 
-    private fun displayNowPlayingMovie(nowPlayingMovieList : List<MovieApiEntity>) {
-        nowPlayingMovieAdapter = NowPlayingMovieAdapter()
-        requireContext().setUpHorizontalRecyclerView(binding.nowPlayingMovieRv, nowPlayingMovieAdapter)
-
-        nowPlayingMovieAdapter.submitList(nowPlayingMovieList)
-        nowPlayingMovieAdapter.notifyItemChanged(0, nowPlayingMovieList.size)
-    }
-
-    private fun displayNowPlayingSeries(nowPlayingSeriesList : List<MovieApiEntity>) {
-        nowPlayingSeriesAdapter = NowPlayingSeriesAdapter()
-        requireContext().setUpHorizontalRecyclerView(binding.nowPlayingSeriesRv, nowPlayingSeriesAdapter)
-
-        nowPlayingSeriesAdapter.submitList(nowPlayingSeriesList)
-        nowPlayingSeriesAdapter.notifyItemChanged(0, nowPlayingSeriesList.size)
+    private fun retryHomePageData() {
+        viewModel.action(UiAction.FetchPopularMovie)
+        viewModel.action(UiAction.FetchNowPlayingMovie(1))
+        viewModel.action(UiAction.FetchNowPlayingSeries)
     }
 
     private fun pageSwitcher(list: MutableList<MovieApiEntity>) {

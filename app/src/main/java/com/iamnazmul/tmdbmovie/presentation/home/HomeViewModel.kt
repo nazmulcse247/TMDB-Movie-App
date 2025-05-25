@@ -6,6 +6,8 @@ import com.iamnazmul.tmdbmovie.domain.apiusecase.FetchPopularMovieApiUseCase
 import com.iamnazmul.tmdbmovie.domain.base.ApiResult
 import com.iamnazmul.tmdbmovie.domain.base.BaseViewModel
 import com.iamnazmul.tmdbmovie.model.entity.MovieApiEntity
+import com.iamnazmul.tmdbmovie.model.entity.NowPlayingMovieApiEntity
+import com.iamnazmul.tmdbmovie.model.entity.NowPlayingSeriesApiEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
@@ -99,14 +101,14 @@ sealed interface UiState {
 sealed interface NowPlayingMovieUiState {
     data class Loading(val isLoading: Boolean) : NowPlayingMovieUiState
     data class ApiError(val message: String) : NowPlayingMovieUiState
-    data class NowPlayingMovieList(val nowPlayingMovie: List<MovieApiEntity>) :
+    data class NowPlayingMovieList(val nowPlayingMovie: List<NowPlayingMovieApiEntity>) :
         NowPlayingMovieUiState
 }
 
 sealed interface NowPlayingSeriesUiState {
     data class Loading(val isLoading: Boolean) : NowPlayingSeriesUiState
     data class ApiError(val message: String) : NowPlayingSeriesUiState
-    data class NowPlayingSeriesList(val nowPlayingSeries: List<MovieApiEntity>) :
+    data class NowPlayingSeriesList(val nowPlayingSeries: List<NowPlayingSeriesApiEntity>) :
         NowPlayingSeriesUiState
 }
 

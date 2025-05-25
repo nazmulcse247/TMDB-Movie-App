@@ -7,19 +7,19 @@ import com.iamnazmul.tmdbmovie.common.adapter.DataBoundListAdapter
 import com.iamnazmul.tmdbmovie.common.extfun.format
 import com.iamnazmul.tmdbmovie.common.extfun.loadImage
 import com.iamnazmul.tmdbmovie.databinding.ItemNowPlayingMovieBinding
-import com.iamnazmul.tmdbmovie.model.entity.MovieApiEntity
+import com.iamnazmul.tmdbmovie.model.entity.NowPlayingMovieApiEntity
 import com.muratozturk.mova.common.enums.ImageTypeEnum
 
-class NowPlayingMovieAdapter : DataBoundListAdapter<MovieApiEntity, ItemNowPlayingMovieBinding>(
-    diffCallback = object : DiffUtil.ItemCallback<MovieApiEntity>() {
+class NowPlayingMovieAdapter : DataBoundListAdapter<NowPlayingMovieApiEntity, ItemNowPlayingMovieBinding>(
+    diffCallback = object : DiffUtil.ItemCallback<NowPlayingMovieApiEntity>() {
         override fun areItemsTheSame(
-            oldItem: MovieApiEntity,
-            newItem: MovieApiEntity
+            oldItem: NowPlayingMovieApiEntity,
+            newItem: NowPlayingMovieApiEntity
         ) = oldItem == newItem
 
         override fun areContentsTheSame(
-            oldItem: MovieApiEntity,
-            newItem: MovieApiEntity
+            oldItem: NowPlayingMovieApiEntity,
+            newItem: NowPlayingMovieApiEntity
         ) = oldItem == newItem
 
     }
@@ -29,7 +29,7 @@ class NowPlayingMovieAdapter : DataBoundListAdapter<MovieApiEntity, ItemNowPlayi
 
     override fun bind(
         binding: ItemNowPlayingMovieBinding,
-        item: MovieApiEntity,
+        item: NowPlayingMovieApiEntity,
         position: Int
     ) {
         binding.apply {
