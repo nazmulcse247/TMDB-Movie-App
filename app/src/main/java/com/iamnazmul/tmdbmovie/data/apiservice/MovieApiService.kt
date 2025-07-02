@@ -1,4 +1,5 @@
 package com.iamnazmul.tmdbmovie.data.apiservice
+import com.iamnazmul.tmdbmovie.model.response.DiscoverMovieApiResponse
 import com.iamnazmul.tmdbmovie.model.response.MovieApiResponse
 import com.iamnazmul.tmdbmovie.model.response.NowPlayingMovieApiResponse
 import com.iamnazmul.tmdbmovie.model.response.NowPlayingSeriesApiResponse
@@ -18,4 +19,10 @@ interface MovieApiService {
 
     @GET("tv/on_the_air")
     suspend fun fetchNowPlayingSeries() : Response<NowPlayingSeriesApiResponse>
+
+    @GET("discover/movie")
+    suspend fun fetchDiscoverMovie(
+        @Query("page") page: Int,
+        @Query("sort_by") sortBy: String,
+    ): DiscoverMovieApiResponse
 }

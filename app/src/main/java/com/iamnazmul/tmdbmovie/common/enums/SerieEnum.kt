@@ -1,4 +1,4 @@
-package com.muratozturk.mova.common.enums
+package com.iamnazmul.tmdbmovie.common.enums
 
 enum class SerieEnum {
     NOW_PLAYING_SERIES,

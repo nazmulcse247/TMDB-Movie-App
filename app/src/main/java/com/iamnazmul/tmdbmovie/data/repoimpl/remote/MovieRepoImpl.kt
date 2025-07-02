@@ -1,13 +1,19 @@
 package com.iamnazmul.tmdbmovie.data.repoimpl.remote
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.iamnazmul.tmdbmovie.data.NetworkBoundResource
 import com.iamnazmul.tmdbmovie.data.apiservice.MovieApiService
+import com.iamnazmul.tmdbmovie.data.mapper.DiscoverMovieApiMapper
 import com.iamnazmul.tmdbmovie.data.mapper.MovieApiMapper
 import com.iamnazmul.tmdbmovie.data.mapper.NowPlayingMovieApiMapper
 import com.iamnazmul.tmdbmovie.data.mapper.NowPlayingSeriesApiMapper
 import com.iamnazmul.tmdbmovie.data.mapper.mapFromApiResponse
+import com.iamnazmul.tmdbmovie.data.paginsource.DiscoverMoviePagingSource
 import com.iamnazmul.tmdbmovie.domain.base.ApiResult
 import com.iamnazmul.tmdbmovie.domain.repository.MovieRepository
+import com.iamnazmul.tmdbmovie.model.entity.DiscoverMovieApiEntity
 import com.iamnazmul.tmdbmovie.model.entity.MovieApiEntity
 import com.iamnazmul.tmdbmovie.model.entity.NowPlayingMovieApiEntity
 import com.iamnazmul.tmdbmovie.model.entity.NowPlayingSeriesApiEntity
@@ -19,6 +25,7 @@ class MovieRepoImpl @Inject constructor(
     private val movieApiMapper: MovieApiMapper,
     private val nowPlayingMovieApiMapper: NowPlayingMovieApiMapper,
     private val nowPlayingSeriesApiMapper: NowPlayingSeriesApiMapper,
+    private val discoverMovieApiMapper: DiscoverMovieApiMapper,
     private val networkBoundResources: NetworkBoundResource
 ) : MovieRepository{
     override suspend fun fetchPopularMovie(): Flow<ApiResult<List<MovieApiEntity>>> {
@@ -33,7 +40,7 @@ class MovieRepoImpl @Inject constructor(
         return mapFromApiResponse(
             result = networkBoundResources.downloadData {
                 apiService.fetchNowPlayingMovie(page)
-            } , mapper = nowPlayingMovieApiMapper
+            }, mapper = nowPlayingMovieApiMapper
         )
     }
 
@@ -43,6 +50,15 @@ class MovieRepoImpl @Inject constructor(
                 apiService.fetchNowPlayingSeries()
             }, mapper = nowPlayingSeriesApiMapper
         )
+    }
+
+    override fun fetchDiscoverMoviesPaged(sortBy: String): Flow<PagingData<DiscoverMovieApiEntity>> {
+        return Pager(
+            config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = {
+                DiscoverMoviePagingSource(apiService, sortBy, discoverMovieApiMapper)
+            }
+        ).flow
     }
 
 
