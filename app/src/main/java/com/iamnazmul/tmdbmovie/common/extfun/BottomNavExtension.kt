@@ -8,6 +8,8 @@ import android.util.TypedValue
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 
 
 fun View.visible() {
@@ -69,20 +71,20 @@ fun View.animateMarginBottom(size: Float, duration: Long) {
 }
 
 fun BottomNavigationView.showWithAnimation(fragmentContainerView: View) {
-    if (this.visibility == View.VISIBLE) return
+    if (this.isVisible) return
     this.visible()
     this.animateTranslationY(0f, 60f, 700)
     fragmentContainerView.animateMarginBottom(60f, 700)
 }
 
 fun BottomNavigationView.hideWithAnimation(fragmentContainerView: View) {
-    if (this.visibility == View.GONE) return
+    if (this.isGone) return
     this.animateTranslationY(60f, 0f, 700)
     fragmentContainerView.animateMarginBottom(0f, 700)
 }
 
 fun BottomNavigationView.hideWithoutAnimation(fragmentContainerView: View) {
-    if (this.visibility == View.GONE) return
+    if (this.isGone) return
     this.gone()
 
     val params =
