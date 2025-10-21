@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.core.content.edit
 
 class SharedPrefHelper(application: Context){
-    private var sharedPreferences = application.getSharedPreferences("com.tmdb.movie",0)
+    private var sharedPreferences = application.getSharedPreferences("com.iamnazmul.tmdbmovie",0)
     fun putString(key: String, value: String) {
         sharedPreferences.edit {
             putString(key, value)
