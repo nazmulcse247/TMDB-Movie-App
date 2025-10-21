@@ -1,13 +1,14 @@
 package com.iamnazmul.tmdbmovie.common.sharedpreference
 
 import android.content.Context
+import androidx.core.content.edit
 
 class SharedPrefHelper(application: Context){
     private var sharedPreferences = application.getSharedPreferences("com.tmdb.movie",0)
     fun putString(key: String, value: String) {
-        val editor = sharedPreferences.edit()
-        editor.putString(key, value)
-        editor.apply()
+        sharedPreferences.edit {
+            putString(key, value)
+        }
     }
 
     fun getString(key: String): String{
@@ -15,21 +16,21 @@ class SharedPrefHelper(application: Context){
     }
 
     fun putBool(key: String, value: Boolean){
-        val editor = sharedPreferences.edit()
-        editor.putBoolean(key, value)
-        editor.apply()
+        sharedPreferences.edit {
+            putBoolean(key, value)
+        }
     }
 
     fun putInt(key: String, value: Int){
-        val editor = sharedPreferences.edit()
-        editor.putInt(key, value)
-        editor.apply()
+        sharedPreferences.edit {
+            putInt(key, value)
+        }
     }
 
     fun putLong(key: String, value: Long){
-        val editor = sharedPreferences.edit()
-        editor.putLong(key, value)
-        editor.apply()
+        sharedPreferences.edit {
+            putLong(key, value)
+        }
     }
 
     fun getBoolean(key: String): Boolean {
@@ -45,6 +46,6 @@ class SharedPrefHelper(application: Context){
     }
 
     fun clearAllCache() {
-        sharedPreferences.edit().clear().apply()
+        sharedPreferences.edit { clear() }
     }
 }
