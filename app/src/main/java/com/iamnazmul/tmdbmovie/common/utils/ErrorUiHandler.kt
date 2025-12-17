@@ -15,21 +15,10 @@ class ErrorUiHandler(
 ) {
     private var networkErrorCallbackFlag = 0
     private var dataErrorCallbackFlag = 0
-    //private lateinit var progressDialog : KProgressHUD
 
     init {
         binding.root.isVisible = false
         featureUi?.isVisible = true
-
-        /*context?.let {
-            progressDialog = KProgressHUD.create(context)
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setLabel("Please wait")
-                .setDetailsLabel("Loading...")
-                .setAnimationSpeed(2)
-                .setCancellable(false)
-                .setDimAmount(0.5f)
-        }*/
     }
 
     fun networkError(
@@ -76,12 +65,6 @@ class ErrorUiHandler(
             dataErrorCallback?.invoke(dataErrorCallbackFlag)
         }
     }
-
-    /*fun showLoader(isLoading: Boolean) {
-        if(isLoading)
-            progressDialog.show()
-        else progressDialog.dismiss()
-    }*/
 
     fun showProgressBar(isLoading: Boolean) {
         binding.root.background =
