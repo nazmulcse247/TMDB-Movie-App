@@ -1,24 +1,9 @@
 package com.iamnazmul.tmdbmovie
-
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
-import android.view.View
-import android.view.WindowInsets
-import android.view.WindowInsetsController
-import android.view.WindowManager
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
-import androidx.core.view.updatePadding
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.iamnazmul.tmdbmovie.common.extfun.hideWithAnimation
-import com.iamnazmul.tmdbmovie.common.extfun.hideWithoutAnimation
 import com.iamnazmul.tmdbmovie.common.extfun.showWithAnimation
 import com.iamnazmul.tmdbmovie.core.common.base.BaseActivity
 import com.iamnazmul.tmdbmovie.databinding.ActivityMainBinding
@@ -32,8 +17,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setUpEdgeToEdge()
+        enableEdgeToEdge()
 
         setupBottomNavigationView()
 
@@ -83,26 +67,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                     binding.bottomNavigation.showWithAnimation(binding.fragmentContainerView)
                 }
             }
-        }
-    }
-
-    private fun setUpEdgeToEdge() {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-
-        WindowInsetsControllerCompat(window, binding.root).apply {
-            isAppearanceLightStatusBars = true
-            isAppearanceLightNavigationBars = true
-        }
-
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.setPadding(
-                systemBars.left,
-                systemBars.top,
-                systemBars.right,
-                systemBars.bottom
-            )
-            WindowInsetsCompat.CONSUMED
         }
     }
 }
