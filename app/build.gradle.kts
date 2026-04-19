@@ -10,12 +10,12 @@ plugins {
 
 android {
     namespace = "com.iamnazmul.tmdbmovie"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.iamnazmul.tmdbmovie"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 1
         versionName = "1.0"
 
@@ -63,8 +63,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+        }
     }
 
     room {
@@ -81,6 +83,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(platform(libs.androidx.compose.bom))
 
     // Testing dependencies
     testImplementation(libs.junit)
@@ -101,11 +104,6 @@ dependencies {
     implementation(libs.logging.interceptor)
     implementation(libs.gson)
     implementation(libs.retrofit.rxjava3.adapter)
-
-    // Image Loading
-    implementation(libs.landscapist.coil)
-    implementation(libs.landscapist.placeholder)
-    implementation(libs.landscapist.animation)
 
     // Dependency Injection
     implementation(libs.hilt.android)
