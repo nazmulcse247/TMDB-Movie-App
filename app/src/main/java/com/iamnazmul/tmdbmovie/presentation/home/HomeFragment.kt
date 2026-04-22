@@ -139,8 +139,7 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>() {
             "${pagerAdapter.count}"
         )
 
-        binding.viewpagerPopularMovies.addOnPageChangeListener(object :
-            ViewPager.OnPageChangeListener {
+        binding.viewpagerPopularMovies.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
@@ -172,7 +171,7 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>() {
                 try {
                     if (list.size - 1 == viewpagerPopularMovies.currentItem) viewpagerPopularMovies.currentItem =
                         0
-                    else viewpagerPopularMovies.currentItem = viewpagerPopularMovies.currentItem + 1
+                    else viewpagerPopularMovies.currentItem += 1
                     timer!!.start()
                 } catch (t: Throwable) {
                     timer!!.cancel()
