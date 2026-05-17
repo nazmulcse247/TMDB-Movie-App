@@ -1,20 +1,18 @@
 package com.iamnazmul.tmdbmovie.presentation.home.explore
 
 import android.os.Bundle
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.iamnazmul.tmdbmovie.common.adapter.LoadStateAdapter
 import com.iamnazmul.tmdbmovie.common.extfun.autoCleared
-import com.iamnazmul.tmdbmovie.common.extfun.setUpGridRecyclerView
+import com.iamnazmul.tmdbmovie.common.extfun.setUpGridRecyclerViewWithSpanLookUp
 import com.iamnazmul.tmdbmovie.common.utils.ErrorUiHandler
 import com.iamnazmul.tmdbmovie.core.common.base.BaseFragment
 import com.iamnazmul.tmdbmovie.databinding.FragmentExploreBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import kotlin.getValue
 
 @AndroidEntryPoint
@@ -36,7 +34,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
 
     private fun initRecyclerView() {
         exploreAdapter = ExplorePagingAdapter()
-        requireContext().setUpGridRecyclerView(binding.itemRv, exploreAdapter, 2)
+        requireContext().setUpGridRecyclerViewWithSpanLookUp(binding.itemRv, exploreAdapter, 2)
         binding.itemRv.adapter =
             exploreAdapter.withLoadStateFooter(
                 footer = LoadStateAdapter {
@@ -46,11 +44,8 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
     }
 
     private fun observeMovies() {
-
-        viewLifecycleOwner.lifecycleScope.launch {
-
+        execute {
             viewModel.discoverMovies.collectLatest {
-
                 exploreAdapter.submitData(it)
             }
         }
@@ -73,12 +68,10 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
                     }
 
                     is LoadState.Error -> {
-
-                        showToastMessage(
-                            (loadStates.refresh as LoadState.Error)
-                                .error
-                                .localizedMessage ?: "Error"
-                        )
+                        errorHandler.dataError((loadStates.refresh as LoadState.Error)
+                            .error
+                            .localizedMessage ?: "Error") {
+                        }
                     }
                 }
             }

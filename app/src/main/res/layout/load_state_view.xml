@@ -18,10 +18,11 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         android:textFontWeight="500"
-        app:layout_constraintEnd_toStartOf="@+id/loadStateRetry"
+        android:maxLines="2"
+        app:layout_constraintEnd_toStartOf="@+id/loadStateProgress"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Error Message" />
+        tools:text="Error Message " />
 
 
     <ProgressBar

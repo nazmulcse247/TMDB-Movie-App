@@ -12,19 +12,11 @@ class LoadStateAdapter(
     private val retry: () -> Unit
 ) : LoadStateAdapter<LoadStateAdapter.ViewHolder>() {
 
-    override fun onBindViewHolder(
-        holder: ViewHolder,
-        loadState: LoadState
-    ) {
-
+    override fun onBindViewHolder(holder: ViewHolder, loadState: LoadState) {
         holder.bind(loadState, retry)
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        loadState: LoadState
-    ): ViewHolder {
-
+    override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): ViewHolder {
         return ViewHolder(
             LoadStateViewBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -34,15 +26,10 @@ class LoadStateAdapter(
         )
     }
 
-    class ViewHolder(
-        private val binding: LoadStateViewBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private val binding: LoadStateViewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(
-            loadState: LoadState,
-            retry: () -> Unit
-        ) {
-
+        fun bind(loadState: LoadState, retry: () -> Unit) {
             with(binding) {
 
                 loadStateProgress.isVisible =

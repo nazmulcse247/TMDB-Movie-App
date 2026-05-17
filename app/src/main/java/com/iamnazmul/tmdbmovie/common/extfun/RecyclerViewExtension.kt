@@ -43,3 +43,28 @@ fun <viewHolder, T : RecyclerView.Adapter<viewHolder>> Context.setUpVerticalRecy
     view.adapter = viewAdapter
 }
 
+fun <T : RecyclerView.Adapter<*>> Context.setUpGridRecyclerViewWithSpanLookUp(
+    view: RecyclerView,
+    viewAdapter: T,
+    column: Int
+) {
+
+    val gridLayoutManager = GridLayoutManager(this, column)
+
+    gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+
+        override fun getSpanSize(position: Int): Int {
+
+            return if (position >= viewAdapter.itemCount) {
+                column
+            } else {
+                1
+            }
+        }
+    }
+
+    view.setHasFixedSize(true)
+    view.layoutManager = gridLayoutManager
+    view.adapter = viewAdapter
+}
+

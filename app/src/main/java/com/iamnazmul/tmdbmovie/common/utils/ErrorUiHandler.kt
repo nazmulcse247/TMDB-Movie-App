@@ -54,7 +54,7 @@ class ErrorUiHandler(
         binding.root.isVisible = true
         binding.errorGroup.isVisible = true
         binding.loadingBar.isVisible = false
-        binding.errorAnimationView.setAnimation(R.raw.data_error_anim)
+        binding.errorAnimationView.setAnimation(R.raw.network_error_anim)
         binding.errorAnimationView.playAnimation()
         binding.errorTitleTV.text = binding.root.context.getString(R.string.heading_oops)
         binding.errorMessageTv.text = message
