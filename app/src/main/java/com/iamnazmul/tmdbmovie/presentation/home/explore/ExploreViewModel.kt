@@ -24,6 +24,10 @@ class ExploreViewModel @Inject constructor(
     val discoverMovies
         get() = _discoverMovies.asStateFlow()
 
+    init {
+        getDiscoverMovies()
+    }
+
     private fun getDiscoverMovies() {
         execute {
             discoverMovieApiUseCase("popularity.desc").cachedIn(viewModelScope).collectLatest {
