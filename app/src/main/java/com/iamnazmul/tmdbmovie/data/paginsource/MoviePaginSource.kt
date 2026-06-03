@@ -4,6 +4,9 @@ import androidx.paging.PagingState
 import com.iamnazmul.tmdbmovie.data.apiservice.MovieApiService
 import com.iamnazmul.tmdbmovie.data.mapper.DiscoverMovieApiMapper
 import com.iamnazmul.tmdbmovie.model.entity.DiscoverMovieApiEntity
+import okio.IOException
+import retrofit2.HttpException
+import java.net.SocketTimeoutException
 
 class DiscoverMoviePagingSource(
     private val apiService: MovieApiService,
@@ -23,6 +26,25 @@ class DiscoverMoviePagingSource(
                 prevKey = if (page == 1) null else page - 1,
                 nextKey = if (mappedList.isEmpty()) null else page + 1
             )
+        }
+        catch (e: IOException) {
+
+            LoadResult.Error(
+                Exception("No internet connection")
+            )
+
+        } catch (e: SocketTimeoutException) {
+
+            LoadResult.Error(
+                Exception("Connection timeout")
+            )
+
+        } catch (e: HttpException) {
+
+            LoadResult.Error(
+                Exception("Server error")
+            )
+
         } catch (e: Exception) {
             LoadResult.Error(e)
         }

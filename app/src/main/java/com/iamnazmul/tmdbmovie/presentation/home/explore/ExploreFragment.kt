@@ -68,9 +68,11 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
                     }
 
                     is LoadState.Error -> {
-                        errorHandler.dataError((loadStates.refresh as LoadState.Error)
-                            .error
-                            .localizedMessage ?: "Error") {
+                        errorHandler.dataError(
+                            (loadStates.refresh as LoadState.Error)
+                                .error
+                                .localizedMessage ?: "Error"
+                        ) {
                         }
                     }
                 }

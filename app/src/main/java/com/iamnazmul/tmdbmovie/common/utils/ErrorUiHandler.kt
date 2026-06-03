@@ -32,7 +32,7 @@ class ErrorUiHandler(
         binding.loadingBar.isVisible = false
         binding.retryButtonTv.text = binding.root.context.getString(R.string.retry)
         binding.errorTitleTV.text =
-            binding.root.context.getString(R.string.msg_no_internet_connection)
+            binding.root.context.getString(R.string.msg_no_internet_connection_title)
         binding.errorMessageTv.text =
             binding.root.context.getString(R.string.msg_no_internet_connection)
 

@@ -32,17 +32,17 @@
         android:textColor="@color/text_color"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/searchBtn"
+        app:layout_constraintEnd_toStartOf="@+id/filterBtn"
         app:layout_constraintStart_toEndOf="@+id/backButton"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/my_list" />
 
     <ImageView
-        android:id="@+id/searchBtn"
+        android:id="@+id/filterBtn"
         android:layout_width="30dp"
         android:layout_height="match_parent"
         android:contentDescription="@string/search"
-        android:src="@drawable/search"
+        android:src="@drawable/filter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
